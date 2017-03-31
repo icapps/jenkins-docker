@@ -1,0 +1,18 @@
+# Jenkins service
+app:
+  image: jenkins
+  ports:
+    - 8085:8080     # Expose port 8085
+  volumes_from:     # Use the correct container defined below
+    - data
+  restart: always   # Assure to start the service when the host restart.
+
+# Container for Jenkins data.
+data:
+  image: busybox    # Use the busybox Docker image to persist our jenkins data
+  volumes:
+    # Map the jenkins data to your persistent folder.
+    # Set correct path to your local folder before `:`
+    - /Users/brentvangeertruy/Documents/Projects/icapps/jenkins-docker/data:/var/jenkins_home:rw
+    # Map local ssh folder to use ssh keys within jenkins
+    - /Users/brentvangeertruy/.ssh:/.ssh:rw
